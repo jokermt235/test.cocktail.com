@@ -5,4 +5,5 @@ import org.mutalip.cocktail.model.entity.Drink;
 import java.util.List;
 public interface IDrink {
     void getData(JSONArray data);
+    void failure(String message);
 }

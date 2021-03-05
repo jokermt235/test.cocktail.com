@@ -34,6 +34,7 @@ public class DrinkRepo {
                         JSONObject data = new JSONObject(response.body().string());
                         resultData.getData(data.getJSONArray("drinks"));
                     }catch (Exception e){
+                        resultData.failure(e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -41,6 +42,7 @@ public class DrinkRepo {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                resultData.failure(t.getMessage());
                 t.printStackTrace();
             }
         });
