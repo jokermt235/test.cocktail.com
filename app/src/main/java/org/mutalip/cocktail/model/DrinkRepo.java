@@ -2,14 +2,10 @@ package org.mutalip.cocktail.model;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mutalip.cocktail.api.CocktailService;
 import org.mutalip.cocktail.instance.IConverterFactory;
 import org.mutalip.cocktail.instance.RetrofitInstance;
-import org.mutalip.cocktail.model.entity.DrinkList;
-
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,7 +30,6 @@ public class DrinkRepo {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()) {
-                    //resultData.getData(response.body());
                     try {
                         JSONObject data = new JSONObject(response.body().string());
                         resultData.getData(data.getJSONArray("drinks"));

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Cocktail</string>
     <string name="app_desc">Search By Name Application</string>
+    <string name="empty">Пусто</string>
 </resources>
