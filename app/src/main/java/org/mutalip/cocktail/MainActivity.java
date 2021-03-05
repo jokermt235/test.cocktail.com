@@ -1,8 +1,11 @@
 package org.mutalip.cocktail;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +25,10 @@ import org.mutalip.cocktail.service.ImageLoader;
 
 public class MainActivity extends AppCompatActivity implements IDrink , ImageLoader {
     private static String TAG = "MainActivity";
+    private static int REQUEST_CODE = 120;
+    private static String perms[] = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
     private ImageView imageDrink;
     private TextView idDrink;
     private TextView strDrink;
@@ -38,6 +45,12 @@ public class MainActivity extends AppCompatActivity implements IDrink , ImageLoa
         strCategory = findViewById(R.id.strCategory);
         strAlcoholic = findViewById(R.id.strAlcoholic);
         serviceIntent = new Intent(this, ImageIntentService.class);
+        ActivityCompat.requestPermissions(this, perms, REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
