@@ -13,6 +13,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -32,7 +34,8 @@ import org.mutalip.cocktail.service.ImageIntentService;
 import org.mutalip.cocktail.service.ImageLoader;
 
 public class MainActivity extends AppCompatActivity implements
-        IDrink , ImageLoader, SimpleGestureFilter.SimpleGestureListener {
+        IDrink , ImageLoader, SimpleGestureFilter.SimpleGestureListener,
+        View.OnClickListener{
     private static String TAG = "MainActivity";
     private static int REQUEST_CODE = 120;
     private static String perms[] = new String[]{
@@ -51,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements
     private TextView messageError;
     private SimpleGestureFilter detector;
     private Button resendButton;
+    private Button favorite;
+    private Button historyButton;
+    private DrinkRepo repo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +73,43 @@ public class MainActivity extends AppCompatActivity implements
         imageProgress   = findViewById(R.id.imageProgressBar);
         messageError = findViewById(R.id.messageError);
         resendButton = findViewById(R.id.resendButton);
+        resendButton.setOnClickListener(this);
+        favorite    = findViewById(R.id.favorite);
+        favorite.setOnClickListener(this);
+        historyButton = findViewById(R.id.history);
+        historyButton.setOnClickListener(this);
         detector = new SimpleGestureFilter(MainActivity.this, this);
+        repo = new DrinkRepo(this);
         getDrink();
     }
 
     private void getDrink(){
         if(storagePermited()) {
-            new DrinkRepo(this).filter();
+            repo.filter();
         }else{
             ActivityCompat.requestPermissions(this, perms, REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, "View clicked");
+        switch (v.getId()) {
+            case  R.id.favorite: {
+                v.setBackground(new ColorDrawable(Color.YELLOW));
+                break;
+            }
+            case R.id.resendButton : {
+                successView.setVisibility(View.GONE);
+                progressView.setVisibility(View.VISIBLE);
+                resendView.setVisibility(View.GONE);
+                getDrink();
+                break;
+            }
+            case R.id.history : {
+                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+                break;
+            }
         }
     }
 
@@ -92,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(storagePermited()) {
-            new DrinkRepo(this).filter();
+            repo.filter();
         }
     }
 
@@ -129,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements
             serviceIntent.putExtra(ImageIntentService.FILENAME, drink.getString("idDrink"));
             serviceIntent.putExtra("receiver", new ProgressReceiver(new Handler()));
             startService(serviceIntent);
+            repo.save(drink);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -179,15 +214,6 @@ public class MainActivity extends AppCompatActivity implements
         progressView.setVisibility(View.GONE);
         resendView.setVisibility(View.VISIBLE);
         messageError.setText(message);
-        resendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                successView.setVisibility(View.GONE);
-                progressView.setVisibility(View.VISIBLE);
-                resendView.setVisibility(View.GONE);
-                getDrink();
-            }
-        });
     }
     class ProgressReceiver extends ResultReceiver {
         public ProgressReceiver(Handler handler){

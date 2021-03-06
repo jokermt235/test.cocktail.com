@@ -1,6 +1,8 @@
 package org.mutalip.cocktail.model.entity;
 
-public class Drink {
+import org.mutalip.cocktail.model.IModel;
+
+public class Drink  {
 
     public String idDrink;
     public String strDrink;

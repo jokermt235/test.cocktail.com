@@ -3,4 +3,7 @@
     <string name="app_desc">Search By Name Application</string>
     <string name="empty">Пусто</string>
     <string name="resend">Перезагрузить</string>
+    <string name="favorite">Избраное</string>
+    <string name="history">История</string>
+    <string name="remove">Удалить</string>
 </resources>

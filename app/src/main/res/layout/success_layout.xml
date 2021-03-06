@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/strDrinkThumb"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="256dp"
         android:layout_marginTop="32dp"
         android:contentDescription="TODO"
         app:srcCompat="@android:drawable/ic_menu_gallery"></ImageView>
@@ -20,30 +20,55 @@
         style="@android:style/Widget.Holo.ProgressBar.Horizontal"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:max="100"
         android:progress="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite"></Button>
+
+        <Button
+            android:id="@+id/history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/history"></Button>
+    </LinearLayout>
+
     <TextView
-        android:text="@string/empty"
         android:id="@+id/idDrink"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </TextView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/empty"></TextView>
+
     <TextView
-        android:text="@string/empty"
         android:id="@+id/strDrink"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </TextView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/empty"></TextView>
+
     <TextView
-        android:text="@string/empty"
         android:id="@+id/strCategory"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </TextView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/empty"></TextView>
+
     <TextView
-        android:text="@string/empty"
         android:id="@+id/strAlcoholic"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </TextView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/empty"></TextView>
 </LinearLayout>
